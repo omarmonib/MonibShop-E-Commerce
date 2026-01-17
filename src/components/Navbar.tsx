@@ -7,7 +7,7 @@ import ShoppingCartIcon from './ShoppingCartIcon';
 const Navbar = () => {
   return (
     <nav className="w-full flex items-center justify-between border-b border-gray-200 pb-4">
-      {/* LEFT */}
+
       <Link href="/" className="flex items-center gap-2">
         <Image
           src="/logo.png"
@@ -18,8 +18,6 @@ const Navbar = () => {
         />
         <p className="hidden md:block text-md font-medium tracking-wider">TrendMonib</p>
       </Link>
-      {/*RIGHT */}
-
       <div className="flex items-center gap-6">
         <SearchBar />
         <Link href="/">

@@ -1,16 +1,18 @@
 'use client';
 
+import FormInput from '@/components/FormInput';
+import { SHIPPING_FORM_LABELS, SHIPPING_PLACEHOLDERS } from '@/constants/cart';
 import { ShippingFormInputs, shippingFormSchema } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ArrowRight } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-const ShippingForm = ({
-  setShippingForm,
-}: {
+interface ShippingFormProps {
   setShippingForm: (data: ShippingFormInputs) => void;
-}) => {
+}
+
+const ShippingForm = ({ setShippingForm }: ShippingFormProps) => {
   const {
     register,
     handleSubmit,
@@ -21,83 +23,56 @@ const ShippingForm = ({
 
   const router = useRouter();
 
-  const handleShippingForm: SubmitHandler<ShippingFormInputs> = (data) => {
+  const handleShippingFormSubmit: SubmitHandler<ShippingFormInputs> = (data) => {
     setShippingForm(data);
     router.push('/cart?step=3', { scroll: false });
   };
+
   return (
-    <form className="flex flex-col gap-4" onSubmit={handleSubmit(handleShippingForm)}>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="name" className="text-xs text-gray-500 font-medium">
-          Name
-        </label>
-        <input
-          className="border-b border-gray-200 py-2 outline-none text-sm"
-          type="text"
-          id="name"
-          placeholder="Enter your name"
-          {...register('name')}
-        />
-        {errors.name && <span className="text-xs text-red-500">{errors.name.message}</span>}
-      </div>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="email" className="text-xs text-gray-500 font-medium">
-          Email
-        </label>
-        <input
-          className="border-b border-gray-200 py-2 outline-none text-sm"
-          type="email"
-          id="email"
-          placeholder="Enter your email"
-          {...register('email')}
-        />
-        {errors.email && <span className="text-xs text-red-500">{errors.email.message}</span>}
-      </div>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="phone" className="text-xs text-gray-500 font-medium">
-          Phone
-        </label>
-        <input
-          className="border-b border-gray-200 py-2 outline-none text-sm"
-          type="tel"
-          id="phone"
-          placeholder="Enter your phone number"
-          {...register('phone')}
-        />
-        {errors.phone && <span className="text-xs text-red-500">{errors.phone.message}</span>}
-      </div>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="address" className="text-xs text-gray-500 font-medium">
-          Address
-        </label>
-        <input
-          className="border-b border-gray-200 py-2 outline-none text-sm"
-          type="text"
-          id="address"
-          placeholder="Enter your address"
-          {...register('address')}
-        />
-        {errors.address && <span className="text-xs text-red-500">{errors.address.message}</span>}
-      </div>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="city" className="text-xs text-gray-500 font-medium">
-          City
-        </label>
-        <input
-          className="border-b border-gray-200 py-2 outline-none text-sm"
-          type="text"
-          id="city"
-          placeholder="Enter your city"
-          {...register('city')}
-        />
-        {errors.city && <span className="text-xs text-red-500">{errors.city.message}</span>}
-      </div>
-      <button
-        type="submit"
-        className="w-full bg-gray-800 hover:bg-gray-900 transition-all duration-300 text-white p-2 rounded-lg cursor-pointer flex items-center justify-center gap-2"
-      >
-        Continue
-        <ArrowRight className="w-3 h-3" />
+    <form className="flex flex-col gap-4 w-full" onSubmit={handleSubmit(handleShippingFormSubmit)}>
+      <FormInput
+        label={SHIPPING_FORM_LABELS.name}
+        type="text"
+        placeholder={SHIPPING_PLACEHOLDERS.name}
+        register={register('name')}
+        error={errors.name}
+      />
+
+      <FormInput
+        label={SHIPPING_FORM_LABELS.email}
+        type="email"
+        placeholder={SHIPPING_PLACEHOLDERS.email}
+        register={register('email')}
+        error={errors.email}
+      />
+
+      <FormInput
+        label={SHIPPING_FORM_LABELS.phone}
+        type="tel"
+        placeholder={SHIPPING_PLACEHOLDERS.phone}
+        register={register('phone')}
+        error={errors.phone}
+      />
+
+      <FormInput
+        label={SHIPPING_FORM_LABELS.address}
+        type="text"
+        placeholder={SHIPPING_PLACEHOLDERS.address}
+        register={register('address')}
+        error={errors.address}
+      />
+
+      <FormInput
+        label={SHIPPING_FORM_LABELS.city}
+        type="text"
+        placeholder={SHIPPING_PLACEHOLDERS.city}
+        register={register('city')}
+        error={errors.city}
+      />
+
+      <button type="submit" className="btn-primary mt-4">
+        Continue to Payment
+        <ArrowRight className="w-4 h-4" />
       </button>
     </form>
   );

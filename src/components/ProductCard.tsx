@@ -34,7 +34,6 @@ const ProductCard = ({ product }: { product: ProductType }) => {
   };
   return (
     <div className="shadow-lg rounded-lg overflow-hidden">
-      {/* IMAGE */}
       <Link href={`/products/${product.id}`}>
         <div className="relative aspect-[3/4]">
           <Image
@@ -45,13 +44,10 @@ const ProductCard = ({ product }: { product: ProductType }) => {
           />
         </div>
       </Link>
-      {/* PRODUCT DETAIL */}
       <div className="flex flex-col gap-4 p-4">
         <h1 className="font-medium">{product.name}</h1>
         <p className="text-sm text-gray-500">{product.shortDescription}</p>
-        {/* PRODUCT TYPES */}
         <div className="flex items-center gap-4 text-xs">
-          {/* SIZE */}
           <div className="flex flex-col gap-1">
             <span className=" text-gray-500">SIZE</span>
             <select
@@ -67,7 +63,6 @@ const ProductCard = ({ product }: { product: ProductType }) => {
               ))}
             </select>
           </div>
-          {/* COLOR */}
           <div className="flex flex-col gap-1">
             <span className=" text-gray-500">COLOR</span>
             <div className="flex items-center gap-2">
@@ -88,7 +83,6 @@ const ProductCard = ({ product }: { product: ProductType }) => {
             </div>
           </div>
         </div>
-        {/* PRICE AND ADD TO CART BUTTON */}
         <div className="flex items-center justify-between">
           <p className="font-medium">{product.price.toFixed(2)}</p>
           <button

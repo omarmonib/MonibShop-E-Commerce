@@ -1,4 +1,4 @@
-// TEMPORARY
+// TODO: Replace with real API data
 
 import { ProductsType } from '@/types';
 import Categories from './Categories';

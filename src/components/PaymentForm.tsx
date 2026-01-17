@@ -1,8 +1,10 @@
 'use client';
 
+import FormInput from '@/components/FormInput';
+import { PAYMENT_FORM_LABELS, PAYMENT_PLACEHOLDERS } from '@/constants/cart';
 import { PaymentFormInputs, paymentFormSchema } from '@/types';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ArrowRight, ShoppingCart } from 'lucide-react';
+import { ShoppingCart } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -11,85 +13,76 @@ const PaymentForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<PaymentFormInputs>({
     resolver: zodResolver(paymentFormSchema),
   });
 
   const router = useRouter();
 
-  const handlePaymentForm: SubmitHandler<PaymentFormInputs> = (data) => {};
+  const handlePaymentFormSubmit: SubmitHandler<PaymentFormInputs> = async (data) => {
+    try {
+      // TODO: Send payment data to backend
+      console.log('Payment submitted:', data);
+      // router.push('/order-confirmation');
+    } catch (error) {
+      console.error('Payment error:', error);
+    }
+  };
+
   return (
-    <form className="flex flex-col gap-4" onSubmit={handleSubmit(handlePaymentForm)}>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="name" className="text-xs text-gray-500 font-medium">
-          Name on Card
-        </label>
-        <input
-          className="border-b border-gray-200 py-2 outline-none text-sm"
-          type="text"
-          id="cardHolder"
-          placeholder="Enter your name"
-          {...register('cardHolder')}
-        />
-        {errors.cardHolder && (
-          <span className="text-xs text-red-500">{errors.cardHolder.message}</span>
-        )}
+    <form className="flex flex-col gap-4 w-full" onSubmit={handleSubmit(handlePaymentFormSubmit)}>
+      <FormInput
+        label={PAYMENT_FORM_LABELS.cardHolder}
+        type="text"
+        placeholder={PAYMENT_PLACEHOLDERS.cardHolder}
+        register={register('cardHolder')}
+        error={errors.cardHolder}
+      />
+
+      <FormInput
+        label={PAYMENT_FORM_LABELS.cardNumber}
+        type="text"
+        placeholder={PAYMENT_PLACEHOLDERS.cardNumber}
+        register={register('cardNumber')}
+        error={errors.cardNumber}
+      />
+
+      <FormInput
+        label={PAYMENT_FORM_LABELS.expirationDate}
+        type="text"
+        placeholder={PAYMENT_PLACEHOLDERS.expirationDate}
+        register={register('expirationDate')}
+        error={errors.expirationDate}
+      />
+
+      <FormInput
+        label={PAYMENT_FORM_LABELS.cvv}
+        type="text"
+        placeholder={PAYMENT_PLACEHOLDERS.cvv}
+        register={register('cvv')}
+        error={errors.cvv}
+      />
+
+      {/* Payment Methods */}
+      <div className="flex items-center gap-3 mt-4 p-4 bg-gray-50 rounded-lg">
+        <p className="text-xs text-gray-600 font-medium">Accepted payments:</p>
+        <div className="flex gap-2">
+          <Image src="/klarna.png" alt="Klarna" width={50} height={25} className="rounded-md" />
+          <Image
+            src="/cards.png"
+            alt="Credit Cards"
+            width={50}
+            height={25}
+            className="rounded-md"
+          />
+          <Image src="/stripe.png" alt="Stripe" width={50} height={25} className="rounded-md" />
+        </div>
       </div>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="cardNumber" className="text-xs text-gray-500 font-medium">
-          Card Number
-        </label>
-        <input
-          className="border-b border-gray-200 py-2 outline-none text-sm"
-          type="text"
-          id="cardNumber"
-          placeholder="Enter your card number"
-          {...register('cardNumber')}
-        />
-        {errors.cardNumber && (
-          <span className="text-xs text-red-500">{errors.cardNumber.message}</span>
-        )}
-      </div>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="expirationDate" className="text-xs text-gray-500 font-medium">
-          Expiration Date
-        </label>
-        <input
-          className="border-b border-gray-200 py-2 outline-none text-sm"
-          type="text"
-          id="expirationDate"
-          placeholder="Enter your expiration date (MM/YY)"
-          {...register('expirationDate')}
-        />
-        {errors.expirationDate && (
-          <span className="text-xs text-red-500">{errors.expirationDate.message}</span>
-        )}
-      </div>
-      <div className="flex flex-col gap-1">
-        <label htmlFor="CVV" className="text-xs text-gray-500 font-medium">
-          CVV
-        </label>
-        <input
-          className="border-b border-gray-200 py-2 outline-none text-sm"
-          type="text"
-          id="cvv"
-          placeholder="Enter your CVV"
-          {...register('cvv')}
-        />
-        {errors.cvv && <span className="text-xs text-red-500">{errors.cvv.message}</span>}
-      </div>
-      <div className="flex items-center gap-2 mt-4">
-        <Image src="/klarna.png" alt="klarna" width={50} height={25} className="rounded-md " />
-        <Image src="/cards.png" alt="cards" width={50} height={25} className="rounded-md " />
-        <Image src="/stripe.png" alt="stripe" width={50} height={25} className="rounded-md " />
-      </div>
-      <button
-        type="submit"
-        className="w-full bg-gray-800 hover:bg-gray-900 transition-all duration-300 text-white p-2 rounded-lg cursor-pointer flex items-center justify-center gap-2"
-      >
-        Checkout
-        <ShoppingCart className="w-3 h-3" />
+
+      <button type="submit" disabled={isSubmitting} className="btn-primary mt-4">
+        {isSubmitting ? 'Processing...' : 'Complete Purchase'}
+        <ShoppingCart className="w-4 h-4" />
       </button>
     </form>
   );
