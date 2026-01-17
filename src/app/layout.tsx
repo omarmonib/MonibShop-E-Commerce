@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'MonibShop - Your One-Stop E-Commerce Store',
+  title: 'MonibShop',
   description: 'Discover the best products at unbeatable prices. Shop now and experience seamless online shopping with MonibShop!',
 };
 

@@ -21,7 +21,8 @@ const product: ProductType = {
   },
 };
 
-export const generateMetadata = async ({params}: {params: {id: string}}) => {
+export const generateMetadata = async ({params}: {params: Promise<{id: string | undefined}>}) => {
+  const {id} = await params;
   // TODO: get the product from db
   // TEMPORARY
   return {
@@ -69,7 +70,7 @@ const ProductPage = async ({
           <Image src="/stripe.png" alt="stripe" width={50} height={25} className="rounded-md " />
         </div>
         <p className="text-gray-500 text-xs">
-          By clicking "Pay Now", you agree to our{' '}
+          By clicking &quot;Pay Now&quot;, you agree to our{' '}
           <span className="underline hover:text-black">Terms & Conditions</span> and{' '}
           <span className="underline hover:text-black">Privacy Policy</span>. You authorize us to
           charge your selected payment method for the total amount shown. All sales are subject to
