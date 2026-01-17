@@ -1,6 +1,11 @@
 /**
+ * @jest-environment node
+ */
+/// <reference types="jest" />
+
+/**
  * Test file for cart utilities
- * Run with: npm test -- cart.test.ts
+ * Run with: pnpm test
  */
 
 import {
