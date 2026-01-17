@@ -22,7 +22,7 @@ const CartItems = ({ items, onRemove }: CartItemsProps) => {
           key={`${item.id}-${item.selectedColor}-${item.selectedSize}`}
         >
           <div className="flex gap-4 flex-1">
-            <div className="relative w-24 h-24 bg-gray-50 rounded-lg overflow-hidden flex-shrink-0">
+            <div className="relative w-24 h-24 bg-gray-50 rounded-lg overflow-hidden shrink-0">
               <Image
                 src={item.images[item.selectedColor]}
                 alt={item.name}
@@ -46,7 +46,7 @@ const CartItems = ({ items, onRemove }: CartItemsProps) => {
           </div>
           <button
             onClick={() => onRemove(item)}
-            className="btn-delete ml-4 flex-shrink-0"
+            className="btn-delete ml-4 shrink-0"
             aria-label="Remove item from cart"
           >
             <Trash2 className="w-4 h-4" />

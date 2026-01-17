@@ -28,7 +28,7 @@
 
   /* Card Container */
   .card-container {
-    @apply shadow-lg border-1 border-gray-100 p-8 rounded-lg;
+    @apply shadow-lg border border-gray-100 p-8 rounded-lg;
   }
 
   /* Step Indicator */

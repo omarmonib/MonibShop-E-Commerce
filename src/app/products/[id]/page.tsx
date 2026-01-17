@@ -1,4 +1,3 @@
-
 import ProductInteraction from '@/components/ProductInteraction';
 import { ProductType } from '@/types';
 import Image from 'next/image';
@@ -21,15 +20,19 @@ const product: ProductType = {
   },
 };
 
-export const generateMetadata = async ({params}: {params: Promise<{id: string | undefined}>}) => {
-  const {id} = await params;
+export const generateMetadata = async ({
+  params,
+}: {
+  params: Promise<{ id: string | undefined }>;
+}) => {
+  const { id } = await params;
   // TODO: get the product from db
   // TEMPORARY
   return {
-    title:product.name,
+    title: product.name,
     description: product.description,
   };
-}
+};
 
 const ProductPage = async ({
   params,
@@ -45,7 +48,7 @@ const ProductPage = async ({
   return (
     <div className="flex flex-col gap-4 lg:flex-row md:gap-12 mt-12">
       {/* IMAGE */}
-      <div className="w-full lg:w-5/12 relative aspect-[2/3]">
+      <div className="w-full lg:w-5/12 relative aspect-2/3">
         <Image
           src={product.images[selectedColor]}
           alt={product.name}
